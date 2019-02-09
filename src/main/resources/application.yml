@@ -1,0 +1,29 @@
+# Do not change the order of the routes
+spring:
+  cloud:
+    gateway:
+      routes:
+      # first.localhost:8080/hello => google.com
+      - id: route1_path1
+        uri: https://google.com
+        filters:
+        - StripPrefix=1 # (this strips off to only https://google.com, instead of https://google.com/hello
+        predicates:
+        - Host=first.**
+        - Path=/hello
+      # first.localhost:8080/somethingElseThatIsNotHello
+      - id: route1_path2
+        uri: https://baeldung.com
+        filters:
+        - StripPrefix=1
+        predicates:
+        - Host=first.**
+        - Path=/**
+      # second.localhost:8080/**
+      - id: route2_path1
+        uri: https://facebook.com
+        filters:
+        - StripPrefix=1
+        predicates:
+        - Host=second.**
+        - Path=/**
