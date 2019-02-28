@@ -27,3 +27,15 @@ spring:
         predicates:
         - Host=second.**
         - Path=/**
+
+      - id: route3_header1
+        uri: https://github.com
+        predicates:
+        - Host=third.**
+        - Header=X-Request-Id, github
+
+      - id: route3_header2
+        uri: https://twitter.com
+        predicates:
+        - Host=third.**
+        - Header=X-Request-Id, twitter
